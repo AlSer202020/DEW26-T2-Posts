@@ -5,6 +5,9 @@ class User {
   read(text) {
     return `${this.name} is reading ${text}`;
   }
+  notify(publicacion) {
+    return this.read(publicacion.summary);
+  }
 }
 
 export { User };

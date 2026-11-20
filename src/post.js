@@ -12,14 +12,31 @@ class Post {
   get summary() {
     return `${this.name} publication number ${this.#number}`;
   }
-  get getSuscribes() {
+  getSubscribers() {
     let message = "";
     for (let i = 0; i < this.#suscribes.length; i++) {
-      message += this.#suscribes;
-      if (i != this.#suscribes.length) {
-        message += ", ";
+      message += this.#suscribes[i].name;
+      if (i < this.#suscribes.length - 1) {
+        message += ",";
       }
     }
+    return message;
+  }
+
+  attach(user) {
+    if (user instanceof User && !this.#suscribes.includes(user)) {
+      this.#suscribes.push(user);
+    }
+  }
+  detach(user) {
+    const index = this.#suscribes.indexOf(user);
+    if (index !== -1) {
+      this.#suscribes.splice(index, 1);
+    }
+  }
+  publish() {
+    this.#number++;
+    return this.#suscribes.map((suscritor) => suscritor.notify(this));
   }
 }
 
